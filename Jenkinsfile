@@ -3,23 +3,23 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                withMaven(maven : 'apache-maven-3.3.9'){
-                        bat "mvn clean compile"
+                withMaven(maven : 'apache_maven_3.8.1'){
+                        sh "mvn clean compile"
                 }
             }
         }
         stage('Test'){
             steps {
-                withMaven(maven : 'apache-maven-3.3.9'){
-                        bat "mvn test"
+                withMaven(maven : 'apache_maven_3.8.1'){
+                        sh "mvn test"
                 }
 
             }
         }
         stage('Deploy') {
             steps {
-               withMaven(maven : 'apache-maven-3.3.9'){
-                        bat "mvn deploy"
+               withMaven(maven : 'apache_maven_3.8.1'){
+                        sh "mvn deploy"
                 }
 
             }
