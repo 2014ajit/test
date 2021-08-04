@@ -1,0 +1,28 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: "INSTALL JAVA AND GIT ON LINUX."
+    yum:
+      name: "{{item}}"
+      state: "present"
+    with_items:
+      - java-1.8.0-openjdk
+      - git
+    when: ansible_os_family == "RedHat"
+  - name: "ADD JENKINS REPOSITORY"
+    get_url:
+      url: "https://pkg.jenkins.io/redhat-stable/jenkins.repo"
+      dest: "/etc/yum.repos.d/jenkins.repo"
+
+  - name: "IMPORT JENKINS KEY."
+    command: "rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key"
+  
+  - name: "INSTALL JENKINS."
+    yum:
+      name: jenkins
+      state: present
+  - name: "START JENKINS SERVICE." 
+    service:
+       name: jenkins
+       state: started
+       enabled: yes
